@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آزمون آگاهی از دستاوردهای ایران در فناوری هسته‌ای</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Tahoma,Arial,sans-serif;
+    background:linear-gradient(135deg,#eef7f1,#f8fbff);
+    color:#243238;
+    line-height:1.9;
+  }
+  .wrap{max-width:900px;margin:auto;padding:18px}
+  .card{
+    background:#fff;border-radius:22px;padding:24px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);margin:16px 0;
+  }
+  h1,h2,h3{margin-top:0}
+  h1{font-size:26px;text-align:center;color:#17633f}
+  .intro{text-align:center;color:#52636a}
+  .badge{
+    display:inline-block;background:#e7f5ed;color:#17633f;
+    border-radius:999px;padding:5px 12px;margin:3px;font-size:13px
+  }
+  .progress{height:10px;background:#e6ece9;border-radius:20px;overflow:hidden;margin:15px 0}
+  .bar{height:100%;width:0;background:#25885a;transition:.3s}
+  .question-title{font-size:20px;font-weight:bold;margin-bottom:14px}
+  .option{
+    display:block;width:100%;text-align:right;border:2px solid #e1e8e5;
+    background:#fff;border-radius:14px;padding:13px 15px;margin:10px 0;
+    cursor:pointer;font-size:16px;transition:.2s;
+  }
+  .option:hover{border-color:#70ae8f;background:#f6fbf8}
+  .option.correct{border-color:#2d9a62;background:#e9f8ef}
+  .option.wrong{border-color:#d65c5c;background:#fff0f0}
+  .option.disabled{cursor:default}
+  .letter{font-weight:bold;margin-left:7px}
+  .feedback{
+    display:none;border-radius:15px;padding:16px;margin-top:16px;
+    border-right:5px solid #25885a;background:#f3faf6
+  }
+  .feedback.wrong{border-right-color:#c94d4d;background:#fff6f6}
+  .feedback strong{display:block;margin-bottom:6px}
+  .next{
+    display:none;margin-top:16px;border:0;border-radius:13px;padding:12px 22px;
+    background:#17633f;color:white;font-size:16px;cursor:pointer
+  }
+  .next:hover{background:#0e4e30}
+  .scorebox{text-align:center}
+  .score{font-size:42px;font-weight:bold;color:#17633f}
+  .level{font-size:22px;font-weight:bold;margin:8px}
+  .meter{height:18px;background:#e6ece9;border-radius:20px;overflow:hidden;margin:15px 0}
+  .meter span{display:block;height:100%;width:0;background:#25885a}
+  .hidden{display:none}
+  .restart{border:0;background:#17633f;color:white;border-radius:13px;padding:12px 24px;font-size:16px;cursor:pointer}
+  .sources{font-size:13px;color:#53636a}
+  .sources a{color:#17633f;word-break:break-word}
+  .small{font-size:13px;color:#66757b}
+  ul{padding-right:22px}
+  @media(max-width:600px){
+    .wrap{padding:10px}.card{padding:17px;border-radius:17px}
+    h1{font-size:21px}.question-title{font-size:18px}
+    .option{font-size:15px}
+  }
+</style>
+
+<style>
+body{
+  background:
+    radial-gradient(circle at 10% 10%, rgba(37,136,90,.10), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(37,100,160,.08), transparent 30%),
+    linear-gradient(135deg,#f2faf5 0%,#f7fbff 55%,#eef7f1 100%);
+}
+.wrap{max-width:860px;padding:14px}
+.card{
+  border:1px solid rgba(23,99,63,.08);
+  box-shadow:0 12px 35px rgba(22,70,50,.09);
+}
+#start{
+  overflow:hidden;
+  position:relative;
+  padding:0 24px 28px;
+}
+#start:before{
+  content:"";
+  display:block;
+  height:115px;
+  margin:0 -24px 22px;
+  background:
+    radial-gradient(circle at 18% 55%, rgba(255,255,255,.35) 0 5px, transparent 6px),
+    radial-gradient(circle at 35% 35%, rgba(255,255,255,.25) 0 4px, transparent 5px),
+    radial-gradient(circle at 70% 62%, rgba(255,255,255,.28) 0 5px, transparent 6px),
+    linear-gradient(135deg,#145d3b,#23875b 55%,#2f9a6b);
+}
+#start:after{
+  content:"☢";
+  position:absolute;
+  top:25px;
+  left:28px;
+  color:rgba(255,255,255,.18);
+  font-size:74px;
+}
+#start .badge:first-child{background:#e1f3e8}
+h1{font-size:29px;line-height:1.5;margin-bottom:10px}
+.intro{font-size:16px;max-width:720px;margin:0 auto 12px}
+.next{
+  box-shadow:0 6px 16px rgba(23,99,63,.22);
+  font-weight:bold;
+}
+.option{
+  position:relative;
+  overflow:hidden;
+  min-height:54px;
+}
+.option:active{transform:scale(.99)}
+.option.correct:before,.option.wrong:before{
+  content:"";
+  position:absolute;right:0;top:0;bottom:0;width:5px;
+}
+.option.correct:before{background:#2d9a62}
+.option.wrong:before{background:#c94d4d}
+.feedback{font-size:15px}
+#result{
+  background:linear-gradient(180deg,#ffffff,#f5fbf7);
+}
+.score{
+  font-size:50px;
+  letter-spacing:1px;
+}
+.level{
+  display:inline-block;
+  background:#e7f5ed;
+  color:#17633f;
+  padding:6px 18px;
+  border-radius:999px;
+}
+.meter{height:20px}
+.sources{background:#fbfdfc}
+@media(max-width:600px){
+  #start{padding:0 16px 22px}
+  #start:before{margin:0 -16px 18px;height:92px}
+  h1{font-size:22px}
+  .intro{font-size:14px}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <div class="card" id="start">
+    <div style="text-align:center">
+      <span class="badge">۲۰ سؤال چهارگزینه‌ای</span>
+      <span class="badge">بازخورد آموزشی فوری</span>
+      <span class="badge">سنجش سطح آگاهی</span>
+    </div>
+    <h1>چقدر ایران را در فناوری هسته‌ای می‌شناسید؟</h1>
+    <p class="intro">
+      این آزمون برای آشنایی شما با دستاوردهای واقعی ایران در فناوری هسته‌ای طراحی شده است. در هر سؤال، چه پاسخ درست بدهید و چه اشتباه،
+      توضیح آموزشی درباره کاربرد یا دستاورد موردنظر نمایش داده می‌شود تا در پایان فقط نمره نگیرید، بلکه چیزهای بیشتری یاد بگیرید.
+    </p>
+    <p class="small">
+      مبنای طراحی: محورهای فایل ارسالی شما درباره کاربردها و دستاوردهای فناوری هسته‌ای،
+      همراه با راستی‌آزمایی اطلاعات فنی با منابع رسمی آژانس بین‌المللی انرژی اتمی (IAEA).
+    </p>
+    <button class="next" style="display:inline-block" onclick="startQuiz()">🚀 شروع آزمون</button>
+  </div>
+
+  <div class="card hidden" id="quiz">
+    <div>
+      <span id="counter" class="badge">سؤال ۱ از ۲۰</span>
+      <span id="scoreLive" class="badge">امتیاز: ۰</span>
+    </div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="question-title" id="q"></div>
+    <div id="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="next" onclick="nextQuestion()">سؤال بعدی ←</button>
+  </div>
+
+  <div class="card hidden scorebox" id="result">
+    <h2>نتیجه آزمون شما</h2>
+    <div class="score" id="finalScore"></div>
+    <div class="meter"><span id="meter"></span></div>
+    <div class="level" id="level"></div>
+    <p id="message"></p>
+    <div class="card" style="background:#f7faf8;text-align:right">
+      <h3>حالا چه چیزهایی را مرور کردید؟</h3>
+      <ul>
+        <li>تولید برق در نیروگاه هسته‌ای بوشهر</li>
+        <li>پزشکی هسته‌ای و تولید رادیوداروها</li>
+        <li>کمک به تشخیص و درمان برخی سرطان‌ها</li>
+        <li>اصلاح نباتات و بهبود برخی ویژگی‌های محصولات کشاورزی</li>
+        <li>کاربردهای هسته‌ای و پرتویی در صنعت</li>
+        <li>مطالعات آب، خاک و محیط‌زیست</li>
+        <li>راکتورهای تحقیقاتی، شتاب‌دهنده‌ها و زیرساخت علمی</li>
+      </ul>
+    </div>
+    <button class="restart" onclick="restartQuiz()">تکرار آزمون</button>
+  </div>
+
+  <div class="card sources">
+    <h3>منابع و توضیح</h3>
+    <p>
+      این آزمون برای آموزش عمومی طراحی شده و ادعاهای فنی آن بر پایه منابع رسمی و علمی
+      تنظیم شده‌اند. در مواردی که منبع فقط «کاربرد/پروژه/پیشرفت» را گزارش می‌کند،
+      متن سؤال نیز با همین احتیاط نوشته شده و از ادعاهای اغراق‌آمیز پرهیز شده است.
+    </p>
+    <ul>
+      <li><a href="https://www.iaea.org/sites/default/files/20/10/tc-iran.pdf" target="_blank">IAEA – Islamic Republic of Iran: Selected achievements</a></li>
+      <li><a href="https://pris.iaea.org/pris/CountryStatistics/CountryDetails.aspx?current=IR" target="_blank">IAEA PRIS – وضعیت نیروگاه‌های هسته‌ای ایران</a></li>
+      <li><a href="https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=310" target="_blank">IAEA PRIS – Bushehr-1</a></li>
+      <li><a href="https://www-pub.iaea.org/MTCD/Publications/PDF/Newsletters/pbg-48.pdf" target="_blank">FAO/IAEA – Plant Breeding & Genetics Newsletter: Iran</a></li>
+      <li><a href="https://conferences.iaea.org/event/145/contributions/4862/" target="_blank">IAEA – بهبود ارقام برنج ایران با روش جهش‌زایی</a></li>
+    </ul>
+    <p class="small">برای استفاده آفلاین، فایل به صورت خودکفا ساخته شده و به اینترنت برای اجرای آزمون نیاز ندارد؛ فقط لینک‌های منابع برای مشاهده منبع اصلی به اینترنت نیاز دارند.</p>
+  </div>
+</div>
+
+<script>
+const questions = [
+{
+ q:"کدام مورد یکی از مهم‌ترین دستاوردهای ایران در حوزه انرژی هسته‌ای است؟",
+ opts:["تولید برق در نیروگاه هسته‌ای","تولید بنزین خودرو","استخراج زغال‌سنگ","تولید گاز طبیعی"],
+ a:0,
+ explain:"درست است. ایران با بهره‌برداری از واحد نخست نیروگاه بوشهر وارد مرحله تولید برق هسته‌ای شد. طبق پایگاه PRIS آژانس بین‌المللی انرژی اتمی، بوشهر-۱ یک راکتور آب فشرده (PWR) با ظرفیت خالص مرجع ۹۱۵ مگاوات است و در سال ۲۰۱۱ به شبکه برق متصل شد؛ بهره‌برداری تجاری آن در ۲۰۱۳ ثبت شده است."
+},
+{
+ q:"کدام گزینه درباره نیروگاه بوشهر-۱ درست است؟",
+ opts:["یک نیروگاه خورشیدی با ظرفیت ۹۱۵ مگاوات است","یک راکتور آب فشرده هسته‌ای با ظرفیت خالص مرجع ۹۱۵ مگاوات است","یک نیروگاه بادی با ظرفیت ۱۰۰۰ مگاوات است","یک راکتور تحقیقاتی کوچک برای تولید رادیودارو است"],
+ a:1,
+ explain:"درست است. PRIS آژانس، بوشهر-۱ را راکتور نوع PWR معرفی می‌کند و ظرفیت خالص مرجع آن را ۹۱۵ مگاوات ثبت کرده است. این واحد با تولید برق هسته‌ای، یکی از نمودهای عملی فناوری هسته‌ای در حوزه انرژی در ایران است."
+},
+{
+ q:"فناوری هسته‌ای در پزشکی ایران چه دستاورد مهمی داشته است؟",
+ opts:["تولید سوخت خودرو","ساخت دستگاه‌های تلفن همراه","توسعه و تولید برخی رادیوداروها برای کاربردهای پزشکی","استخراج آب از نفت"],
+ a:2,
+ explain:"درست است. آژانس بین‌المللی انرژی اتمی گزارش کرده که ایران با پشتیبانی و آموزش‌های فنی، توان خودکفایی خود را در تولید برخی محصولات رادیوایزوتوپی افزایش داده است؛ از جمله محصولاتی که برای درمان سرطان‌های پروستات، چشم و مغز به کار می‌روند."
+},
+{
+ q:"رادیوداروها در پزشکی هسته‌ای چه نقشی دارند؟",
+ opts:["فقط برای تولید برق استفاده می‌شوند","برای برخی کاربردهای تشخیصی و درمانی، از جمله در سرطان، به کار می‌روند","برای ساخت سیمان استفاده می‌شوند","فقط در کشاورزی کاربرد دارند"],
+ a:1,
+ explain:"درست است. رادیوداروها مواد دارویی حاوی رادیونوکلید هستند که بسته به نوعشان می‌توانند برای تصویربرداری، تشخیص یا رساندن پرتو به بافت هدف در درمان برخی بیماری‌ها استفاده شوند. ایران نیز در توسعه و تولید برخی رادیوداروهای پزشکی فعالیت کرده است."
+},
+{
+ q:"یکی از زمینه‌هایی که ایران در آن از فناوری هسته‌ای برای بهبود کشاورزی استفاده کرده، کدام است؟",
+ opts:["تولید تراکتور","اصلاح نباتات با ایجاد و انتخاب جهش‌های مفید","ساخت گلخانه با انرژی خورشیدی","استخراج نفت از خاک"],
+ a:1,
+ explain:"درست است. در ایران از پرتودهی گاما در برنامه‌های اصلاح نباتات استفاده شده است. گزارش FAO/IAEA نمونه‌هایی از ارقام و خطوط گیاهی ایرانی را معرفی می‌کند که با جهش‌زایی القایی برای ویژگی‌هایی مانند تحمل شوری، عملکرد یا زودرسی بررسی و انتخاب شده‌اند."
+},
+{
+ q:"در یکی از برنامه‌های اصلاح نباتات ایران، پرتودهی گاما برای چه هدفی به کار رفته است؟",
+ opts:["افزایش مصرف آب گیاه","ایجاد تنوع ژنتیکی و انتخاب گیاهان دارای ویژگی‌های مطلوب","تبدیل گندم به برنج","تولید سوخت هسته‌ای"],
+ a:1,
+ explain:"درست است. در جهش‌زایی القایی، پرتو گاما می‌تواند تغییرات ژنتیکی ایجاد کند و پژوهشگران سپس نسل‌های مختلف گیاه را بررسی و نمونه‌های دارای صفات مطلوب را انتخاب کنند. این روش در برنامه‌های اصلاح نباتات ایران نیز به کار رفته است."
+},
+{
+ q:"کدام نمونه مشخص از دستاورد کشاورزی هسته‌ای ایران در منابع FAO/IAEA گزارش شده است؟",
+ opts:["تولید ارقام پنبه «پرتو» و «توان» با پرتودهی گاما","تولید بنزین از پنبه","تولید برق از گندم","تولید آب آشامیدنی از برنج"],
+ a:0,
+ explain:"درست است. خبرنامه تخصصی FAO/IAEA گزارش می‌کند که دو رقم پنبه ایرانی با نام‌های Parto و Tavan در سال ۲۰۱۹ معرفی شدند و از ارقام ایرانی موجود با استفاده از پرتودهی گاما به دست آمده‌اند. در گزارش، مقاومت آن‌ها به شوری خاک و آب نیز ذکر شده است."
+},
+{
+ q:"فناوری هسته‌ای چگونه می‌تواند در مدیریت آب و خاک به کار بیاید؟",
+ opts:["با تبدیل خاک به سوخت","با استفاده از روش‌های ایزوتوپی برای مطالعه و مدیریت آب و خاک","با حذف کامل بارندگی","با تبدیل آب شور به نفت"],
+ a:1,
+ explain:"درست است. روش‌های ایزوتوپی می‌توانند اطلاعاتی درباره حرکت و منشأ آب، فرسایش خاک و چگونگی مصرف آب و مواد غذایی در کشاورزی فراهم کنند. آژانس این روش‌ها را برای مدیریت پایدار آب و خاک و افزایش بهره‌وری کشاورزی معرفی کرده است."
+},
+{
+ q:"آژانس بین‌المللی انرژی اتمی در گزارش مربوط به ایران، کدام مورد را از اولویت‌های ملی مرتبط با کاربردهای هسته‌ای معرفی کرده است؟",
+ opts:["مد و پوشاک","آب و محیط‌زیست","صنعت گردشگری","تولید خودرو"],
+ a:1,
+ explain:"درست است. در برگه رسمی IAEA درباره ایران، «آب و محیط‌زیست» در کنار سلامت، غذا و کشاورزی، انرژی هسته‌ای و کاربردهای صنعتی در میان اولویت‌های ملی آمده است. این نشان می‌دهد کاربرد فناوری هسته‌ای در ایران به برق محدود نیست."
+},
+{
+ q:"یکی از کاربردهای فناوری پرتویی در صنعت چیست؟",
+ opts:["آزمون و بررسی مواد و قطعات بدون تخریب آن‌ها","پخت نان در خانه","تولید بنزین","تولید سیمان بدون مواد اولیه"],
+ a:0,
+ explain:"درست است. فناوری‌های هسته‌ای و پرتویی در صنعت کاربردهای متنوعی دارند؛ یکی از آن‌ها آزمون‌های غیرمخرب است که برای بررسی ویژگی یا عیب مواد و قطعات بدون تخریب آن‌ها استفاده می‌شود. منابع IAEA کاربردهای صنعتی فناوری هسته‌ای را شامل آزمون مواد و کاربردهای پرتویی می‌دانند."
+},
+{
+ q:"کدام گزینه بهتر نشان می‌دهد که فناوری هسته‌ای فقط به تولید برق محدود نیست؟",
+ opts:["چون فقط در نیروگاه‌ها استفاده می‌شود","چون در پزشکی، کشاورزی، صنعت، آب و محیط‌زیست نیز کاربرد دارد","چون فقط برای تحقیقات دانشگاهی است","چون فقط برای تولید سوخت استفاده می‌شود"],
+ a:1,
+ explain:"درست است. تصویر کامل فناوری هسته‌ای بسیار گسترده‌تر از نیروگاه است. در ایران نیز نمونه‌های مستند در پزشکی و رادیودارو، اصلاح نباتات، آب و خاک، کاربردهای صنعتی و تولید برق وجود دارد. به همین دلیل بهتر است «فناوری هسته‌ای» را یک مجموعه فناوری بدانیم، نه فقط یک نیروگاه."
+},
+{
+ q:"کدام مورد در گزارش رسمی IAEA درباره دستاوردهای ایران در حوزه سلامت آمده است؟",
+ opts:["افزایش توان تولید برخی محصولات رادیوایزوتوپی برای درمان سرطان","تولید واکسن‌های معمولی با راکتور","ساخت تمام تجهیزات بیمارستانی","تولید داروهای گیاهی"],
+ a:0,
+ explain:"درست است. IAEA اعلام کرده که با پشتیبانی این سازمان، ایران توان خودکفایی خود را در تولید برخی محصولات رادیوایزوتوپی افزایش داده و از جمله به محصولاتی برای درمان سرطان‌های پروستات، چشم و مغز اشاره کرده است. این یک نمونه روشن از تبدیل دانش هسته‌ای به کاربرد سلامت است."
+},
+{
+ q:"ایران در زمینه اصلاح ارقام برنج با فناوری هسته‌ای چه کاری انجام داده است؟",
+ opts:["برنج را به گندم تبدیل کرده است","با استفاده از پرتو گاما به دنبال ارقام مقاوم‌تر به شوری و پربازده‌تر رفته است","همه مزارع برنج را تعطیل کرده است","برنج را برای تولید برق استفاده کرده است"],
+ a:1,
+ explain:"درست است. در یک پروژه ارائه‌شده در چارچوب FAO/IAEA، پژوهشگران ایرانی از جهش‌زایی با پرتو گاما برای ایجاد تنوع و انتخاب خطوط برنج با هدف تحمل شوری، عملکرد بیشتر و زودرسی استفاده کردند. تعدادی از خطوط امیدبخش برای ارزیابی‌های بعدی انتخاب شدند."
+},
+{
+ q:"یکی از کاربردهای راکتورهای تحقیقاتی و شتاب‌دهنده‌ها در حوزه هسته‌ای چیست؟",
+ opts:["فقط تولید برق شهری","کمک به پژوهش و تولید برخی رادیوایزوتوپ‌ها و رادیوداروها","تولید لاستیک خودرو","تولید سیمان"],
+ a:1,
+ explain:"درست است. راکتورهای تحقیقاتی و شتاب‌دهنده‌ها علاوه بر پژوهش‌های علمی، می‌توانند برای تولید رادیوایزوتوپ‌ها و مواد مورد استفاده در پزشکی هسته‌ای به کار روند. ایران نیز سابقه فعالیت در این حوزه‌ها را دارد و IAEA پروژه‌های مرتبط با رادیوداروها و شتاب‌دهنده‌های پزشکی در ایران را ثبت کرده است."
+},
+{
+ q:"کدام گزینه یک نمونه از کاربرد فناوری هسته‌ای برای کمک به محیط‌زیست و منابع طبیعی در ایران است؟",
+ opts:["بررسی فرسایش و تخریب خاک و کمک به مدیریت آن","افزایش مصرف سوخت فسیلی","افزایش آلودگی آب","تولید زغال‌سنگ"],
+ a:0,
+ explain:"درست است. IAEA درباره ایران از پروژه‌های مرتبط با مدیریت خاک و کاهش تخریب سرزمین، از جمله در جنگل‌های هیرکانی، گزارش کرده است. استفاده از روش‌های هسته‌ای و ایزوتوپی می‌تواند برای اندازه‌گیری و شناخت فرسایش و تخریب زمین به تصمیم‌گیری بهتر برای حفاظت از منابع طبیعی کمک کند."
+},
+{
+ q:"در حوزه کشاورزی، فناوری هسته‌ای می‌تواند به کدام هدف کمک کند؟",
+ opts:["افزایش هدررفت آب","افزایش بهره‌وری آب و مواد غذایی و بهبود برخی ارقام گیاهی","حذف نیاز به کشاورز","تبدیل همه زمین‌ها به معدن"],
+ a:1,
+ explain:"درست است. روش‌های هسته‌ای و ایزوتوپی می‌توانند به مطالعه مصرف آب و مواد غذایی، مدیریت بهتر خاک و آب و اصلاح نباتات کمک کنند. در ایران نیز برنامه‌های اصلاح نباتات با جهش‌زایی و پروژه‌های مدیریت خاک و آب گزارش شده‌اند."
+},
+{
+ q:"کدام گزینه درباره بوشهر-۲ طبق پایگاه PRIS آژانس درست است؟",
+ opts:["کاملاً تعطیل شده است","در حال ساخت است و ظرفیت خالص مرجع آن ۹۷۴ مگاوات ثبت شده است","یک نیروگاه خورشیدی است","از سال ۲۰۱۳ در حال تولید برق تجاری است"],
+ a:1,
+ explain:"درست است. طبق پایگاه PRIS آژانس بین‌المللی انرژی اتمی، بوشهر-۲ در وضعیت «در حال ساخت» قرار دارد و ظرفیت خالص مرجع آن ۹۷۴ مگاوات ثبت شده است. این سؤال برای آشنایی با وضعیت زیرساخت انرژی هسته‌ای ایران است، نه برای ادعای تولید برق توسط واحدی که هنوز عملیاتی نشده است."
+},
+{
+ q:"اگر بخواهیم یک نتیجه کلی از دستاوردهای هسته‌ای ایران بگیریم، کدام گزینه دقیق‌تر است؟",
+ opts:["ایران فقط در ساخت نیروگاه فعالیت کرده است","ایران فقط در پزشکی فعالیت کرده است","فعالیت‌های هسته‌ای ایران حوزه‌هایی مانند انرژی، پزشکی، کشاورزی، آب و محیط‌زیست و صنعت را دربرگرفته است","فناوری هسته‌ای هیچ کاربرد غیرنظامی ندارد"],
+ a:2,
+ explain:"درست است. منابع رسمی IAEA درباره ایران مجموعه‌ای از حوزه‌ها را گزارش می‌کنند: تولید برق هسته‌ای، پزشکی و رادیوداروها، اصلاح نباتات و کشاورزی، مدیریت خاک و آب، محیط‌زیست و کاربردهای صنعتی. بنابراین دستاورد هسته‌ای را نباید فقط به یک حوزه محدود کرد."
+},
+{
+ q:"کدام گزینه بهتر تفاوت «انرژی هسته‌ای» و «فناوری هسته‌ای» را برای این آزمون نشان می‌دهد؟",
+ opts:["هر دو دقیقاً فقط به تولید برق گفته می‌شوند","انرژی هسته‌ای بیشتر به تولید انرژی مربوط است، اما فناوری هسته‌ای دامنه وسیع‌تری از کاربردهای پزشکی، کشاورزی، صنعتی و محیط‌زیستی را هم شامل می‌شود","فناوری هسته‌ای فقط مربوط به سلاح است","انرژی هسته‌ای هیچ کاربرد علمی ندارد"],
+ a:1,
+ explain:"درست است. تولید برق یکی از مهم‌ترین کاربردهای انرژی هسته‌ای است؛ اما فناوری هسته‌ای مفهومی گسترده‌تر است و شامل استفاده از پرتوها، رادیوایزوتوپ‌ها، روش‌های ایزوتوپی و فناوری‌های مرتبط در پزشکی، کشاورزی، صنعت و محیط‌زیست نیز می‌شود. هدف این آزمون همین آشنایی گسترده‌تر است."
+},
+{
+ q:"بعد از این آزمون، کدام جمع‌بندی درباره دستاوردهای ایران منطقی‌تر است؟",
+ opts:["فناوری هسته‌ای فقط یک موضوع نیروگاهی است","فناوری هسته‌ای می‌تواند از تولید برق تا سلامت، کشاورزی، صنعت و حفاظت از منابع آب و خاک کاربرد داشته باشد و ایران در چندین مورد از این حوزه‌ها فعالیت و دستاورد داشته است","فناوری هسته‌ای فقط برای آزمایشگاه است","هیچ نمونه‌ای از کاربرد هسته‌ای در زندگی مردم وجود ندارد"],
+ a:1,
+ explain:"درست است. این جمع‌بندی هدف اصلی آزمون است: مخاطب بداند فناوری هسته‌ای فقط نام یک نیروگاه نیست. در ایران نمونه‌های مستندی از تولید برق هسته‌ای، توسعه رادیوداروها، اصلاح نباتات با جهش‌زایی، مدیریت خاک و آب و کاربردهای صنعتی و پژوهشی وجود دارد. مهم‌تر از حفظ چند عدد، شناخت این کاربردها و اثر آن‌هاست."
+}
+];
+
+let index=0, score=0, answered=false;
+
+function startQuiz(){
+  document.getElementById('start').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  index=0;score=0;render();
+}
+function render(){
+  answered=false;
+  const item=questions[index];
+  document.getElementById('counter').textContent=`سؤال ${index+1} از ${questions.length}`;
+  document.getElementById('scoreLive').textContent=`امتیاز: ${score}`;
+  document.getElementById('bar').style.width=((index)/questions.length*100)+'%';
+  document.getElementById('q').textContent=item.q;
+  const box=document.getElementById('options'); box.innerHTML='';
+  item.opts.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='option';
+    b.innerHTML=`<span class="letter">${['الف','ب','ج','د'][i]})</span>${text}`;
+    b.onclick=()=>answer(i);
+    box.appendChild(b);
+  });
+  document.getElementById('feedback').style.display='none';
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('nextBtn').style.display='none';
+}
+function answer(choice){
+  if(answered)return;
+  answered=true;
+  const item=questions[index];
+  const buttons=[...document.querySelectorAll('.option')];
+  buttons.forEach((b,i)=>{
+    b.classList.add('disabled');
+    if(i===item.a)b.classList.add('correct');
+    if(i===choice && choice!==item.a)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('feedback');
+  if(choice===item.a){
+    score++;
+    fb.className='feedback';
+    fb.innerHTML=`<strong>🟢 آفرین! پاسخ شما درست است.</strong>
+      <div>${item.explain}</div>`;
+  }else{
+    fb.className='feedback wrong';
+    fb.innerHTML=`<strong>🔴 پاسخ شما درست نبود.</strong>
+      <div>پاسخ صحیح: <b>${['الف','ب','ج','د'][item.a]}) ${item.opts[item.a]}</b></div>
+      <div style="margin-top:7px">${item.explain}</div>`;
+  }
+  fb.style.display='block';
+  document.getElementById('scoreLive').textContent=`امتیاز: ${score}`;
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('nextBtn').textContent=index===questions.length-1?'مشاهده نتیجه نهایی':'سؤال بعدی ←';
+}
+function nextQuestion(){
+  if(!answered)return;
+  index++;
+  if(index>=questions.length){showResult();return;}
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showResult(){
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  const pct=Math.round(score/questions.length*100);
+  document.getElementById('finalScore').textContent=`${score} از ${questions.length}`;
+  document.getElementById('meter').style.width=pct+'%';
+  let level,msg;
+  if(score<=5){
+    level='🔴 آگاهی کم';
+    msg='هنوز با بخش زیادی از کاربردها و دستاوردهای فناوری هسته‌ای ایران آشنا نشده‌اید. توضیحات سؤال‌ها را دوباره مرور کنید.';
+  }else if(score<=10){
+    level='🟠 آگاهی متوسط';
+    msg='با بعضی از کاربردها آشنا هستید، اما چند حوزه مهم مانند پزشکی، کشاورزی، آب و صنعت نیاز به مرور بیشتری دارد.';
+  }else if(score<=15){
+    level='🟡 آگاهی خوب';
+    msg='شناخت خوبی از کاربردها و دستاوردهای فناوری هسته‌ای ایران دارید. با مرور توضیحات می‌توانید شناخت دقیق‌تری پیدا کنید.';
+  }else if(score<=18){
+    level='🟢 آگاهی خیلی خوب';
+    msg='تبریک! شما با بخش بزرگی از دستاوردها و کاربردهای فناوری هسته‌ای ایران آشنا هستید.';
+  }else{
+    level='🏆 آگاهی عالی';
+    msg='عالی! شما شناخت بسیار خوبی از دستاوردهای ایران در فناوری هسته‌ای و کاربردهای آن در زندگی مردم دارید.';
+  }
+  document.getElementById('level').textContent=level;
+  document.getElementById('message').textContent=msg;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function restartQuiz(){
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  index=0;score=0;render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
